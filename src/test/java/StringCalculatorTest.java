@@ -1,46 +1,45 @@
 import org.junit.jupiter.api.Assertions;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 
 
 class StringCalculatorTest {
+    private StringCalculator calculator;
 
-    class AddTestCase {
-        private final String input;
-        private final int expected;
-
-        AddTestCase(String input, int expected) {
-            this.input = input;
-            this.expected = expected;
-        }
-
-
-        public String getInput() {
-            return input;
-        }
-
-        public int getExpected() {
-            return expected;
-        }
+    @BeforeEach
+    void setUp() {
+        calculator = new StringCalculator();
     }
 
     @org.junit.jupiter.api.Test
-    void add() {
-        List<AddTestCase> testCases = new ArrayList<>();
-        testCases.add(new AddTestCase( "", 0));
-        testCases.add(new AddTestCase("0", 0));
-        testCases.add(new AddTestCase("5", 5));
-        testCases.add(new AddTestCase("2,3", 5));
-        testCases.add(new AddTestCase("4,5", 9));
-        testCases.add(new AddTestCase("4,6,5", 15));
-        testCases.add(new AddTestCase("4,9,5", 18));
-        testCases.add(new AddTestCase("4\n9,5", 18));
-        testCases.add(new AddTestCase("4,9\n5,6", 24));
-
-        StringCalculator calculator = new StringCalculator();
-        for (AddTestCase testCase: testCases) {
-            Assertions.assertEquals(calculator.add(testCase.getInput()), testCase.getExpected());
-        }
+    void addSingleDigit() {
+        Assertions.assertEquals(0, calculator.add("0"));
+        Assertions.assertEquals(5, calculator.add("5"));
     }
+
+    @org.junit.jupiter.api.Test
+    void addEmptyString() {
+        Assertions.assertEquals(0, calculator.add(""));
+        Assertions.assertEquals(0, calculator.add(" "));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addUnknownNumberOfIntegers() {
+        Assertions.assertEquals(9, calculator.add("5,4"));
+        Assertions.assertEquals(9, calculator.add("1,4,4"));
+        Assertions.assertEquals(10, calculator.add("1,4,3,2"));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addNewLineInput() {
+        Assertions.assertEquals(9, calculator.add("5\n4"));
+        Assertions.assertEquals(10, calculator.add("1,4\n3,2"));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addUsingCustomDelimiter() {
+        Assertions.assertEquals(9, calculator.add("//;\n5\n4"));
+        Assertions.assertEquals(9, calculator.add("//nn\n5nn4"));
+        Assertions.assertEquals(10, calculator.add("//;\n1;4\n3;2"));
+    }
+
 }
