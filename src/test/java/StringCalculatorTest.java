@@ -42,4 +42,9 @@ class StringCalculatorTest {
         Assertions.assertEquals(10, calculator.add("//;\n1;4\n3;2"));
     }
 
+    @org.junit.jupiter.api.Test
+    void addThrowOnNegativeIntegers() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//;\n-15\n4"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//;\n-15\n-4;-10"));
+    }
 }
