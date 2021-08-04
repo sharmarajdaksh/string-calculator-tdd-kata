@@ -1,5 +1,6 @@
 public class StringCalculator {
     public int add(String numbers) throws NumberFormatException {
+        numbers = numbers.replace("\n", ",");
         String[] numbersList = numbers.split(",");
 
         if (numbersList.length < 1)

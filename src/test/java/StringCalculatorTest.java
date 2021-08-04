@@ -36,7 +36,7 @@ class StringCalculatorTest {
         testCases.add(new AddTestCase("4,6,5", 15));
         testCases.add(new AddTestCase("4,9,5", 18));
         testCases.add(new AddTestCase("4\n9,5", 18));
-        testCases.add(new AddTestCase("4,9\n5,6", 18));
+        testCases.add(new AddTestCase("4,9\n5,6", 24));
 
         StringCalculator calculator = new StringCalculator();
         for (AddTestCase testCase: testCases) {
