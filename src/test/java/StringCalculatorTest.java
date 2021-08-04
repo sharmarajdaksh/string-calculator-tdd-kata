@@ -37,22 +37,33 @@ class StringCalculatorTest {
 
     @org.junit.jupiter.api.Test
     void addUsingCustomDelimiter() {
-        Assertions.assertEquals(9, calculator.add("//;\n5\n4"));
-        Assertions.assertEquals(9, calculator.add("//nn\n5nn4"));
-        Assertions.assertEquals(10, calculator.add("//;\n1;4\n3;2"));
+        Assertions.assertEquals(9, calculator.add("//[;]\n5\n4"));
+        Assertions.assertEquals(10, calculator.add("//[;]\n1;4\n3;2"));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addUsingCustomLongDelimiter() {
+        Assertions.assertEquals(9, calculator.add("//[nn]\n5nn4"));
     }
 
     @org.junit.jupiter.api.Test
     void addThrowOnNegativeIntegers() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//;\n-15\n4"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//;\n-15\n-4;-10"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//[;]\n-15\n4"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//[;]\n-15\n-4;-10"));
     }
 
     @org.junit.jupiter.api.Test
     void addIgnoreNumbersGreaterThan1000() {
-        Assertions.assertEquals(4, calculator.add("//;\n1005\n4"));
-        Assertions.assertEquals(5, calculator.add("//nn\n5nn1004"));
-        Assertions.assertEquals(10, calculator.add("//;\n1;4\n3;2;100999"));
+        Assertions.assertEquals(4, calculator.add("//[;]\n1005\n4"));
+        Assertions.assertEquals(5, calculator.add("//[nn]\n5nn1004"));
+        Assertions.assertEquals(10, calculator.add("//[;]\n1;4\n3;2;100999"));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addMultipleDelimiters() {
+        Assertions.assertEquals(4, calculator.add("//[;]\n1005\n4"));
+        Assertions.assertEquals(24, calculator.add("//[nn][;]\n5nn1004;9;10"));
+        Assertions.assertEquals(10, calculator.add("//[nn][**]\n1nn4\n3**2nn100999"));
     }
 
 
