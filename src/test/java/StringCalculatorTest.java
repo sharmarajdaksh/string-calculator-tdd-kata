@@ -47,4 +47,13 @@ class StringCalculatorTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//;\n-15\n4"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("//;\n-15\n-4;-10"));
     }
+
+    @org.junit.jupiter.api.Test
+    void addIgnoreNumbersGreaterThan1000() {
+        Assertions.assertEquals(4, calculator.add("//;\n1005\n4"));
+        Assertions.assertEquals(5, calculator.add("//nn\n5nn1004"));
+        Assertions.assertEquals(10, calculator.add("//;\n1;4\n3;2;100999"));
+    }
+
+
 }
